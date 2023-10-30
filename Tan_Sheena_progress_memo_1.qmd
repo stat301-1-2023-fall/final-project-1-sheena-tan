@@ -1,0 +1,77 @@
+---
+title: "Progress Memo 1"
+subtitle: |
+  | Final Project 
+  | Data Science 1 with R (STAT 301-1)
+author: "Sheena Tan"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+
+from: markdown+emoji 
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git](https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git)
+
+:::
+
+## Data source
+
+::: {.callout-note}
+## Solution
+
+I will be using data from Northwestern's Course and Teacher Evaluation Council (CTEC) system, which are available to Northwestern students on Caesar. These datasets provide ratings made by previous students regarding various courses and their instructor, including information like how much time the student spent on the course, what degree requirements the course fulfilled for the student, what year and school the student is in, and how they would rate the instruction and the course across several categories. 
+
+I will scrape the data myself from the most recent academic year (2022-23) across various undergraduate courses, organizing the data by school and department, in addition to the variables already consolidated on each CTEC report. Therefore, the dataset will have as many entries as there were unique undergraduate courses (different course and instructor and department) offered last year. For cross-registered courses, I will include one entry for each department. I will not include discussion sections under a larger lecture class.
+
+So far, I have scraped five departments worth of courses for the academic year from Psychology (PSYCH), Civil and Environmental Engineering (CIV_ENV), Music (MUSIC), Communication Studies (COMMS), Journalism (JOUR), and School of Education & Social Policy Core (SESP), totaling 437 courses. This data scraping took me 6 continuous hours. 
+
+:::
+
+## Why this data
+
+::: {.callout-note}
+## Solution
+
+This data is of personal interest. I've been at Northwestern four years already, and I've heard my fair share of anecdotes about certain departments or courses being particularly awful or wonderful, or even students in certain schools being one way or the other. However, CTECs do not provide a built-in mechanism to compare data across courses in a department or across departments, which I want to explore.
+
+:::
+
+## Data quality & complexity check
+
+::: {.callout-note}
+## Solution
+
+I am scraping the data into an Excel file, which I can then export as a csv and read into Rstudio. Currently, I have 8 variables and 437 observations, but I hope to approximately double this amount by analyzing one more random department's worth of courses for each school. The 8 variables are: 
+
+-  school	dept (categorical)
+-  course_num (categorical)
+-  course_term (categorical)
+-  inst_rating (numerical)
+-  course_rating (numerical)
+-  learn_rating (numerical)
+-  hours_spent (numerical)
+
+There will be no missingness issues because courses that do not receive ratings do not show up on CTEC for that year.
+
+:::
+
+## Potential data issues
+
+::: {.callout-note}
+## Solution
+
+I have previously worked with the current data that I have so there shouldn't be any data issues. The only issue is that there is a lot of data scraping that I still want to do for this project, as CTECs are not exportable themselves, which will be very time consuming. 
+
+:::
