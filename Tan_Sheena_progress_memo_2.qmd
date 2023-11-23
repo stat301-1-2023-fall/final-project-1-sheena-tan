@@ -79,35 +79,6 @@ For time limitations during data scraping, the raw data did repeat values for ea
 
 To address these missing values, cleaning occured in three main steps: First, string values were changed to be missing values when empty. Second, missing values were filled from the nearest values above. Finally, the data was examined for missingess and no remaining missingness (other than in the `essay` responses) was found. 
 
-```{r results = 'hide'} 
-# install packages
-library(tidyverse)
-library(ggthemes)
-library(patchwork)
-library(cowplot)
-
-# read in data
-ctec_data_raw <- read.csv("data/ctec_data.csv")
-
-# data cleaning
-ctec_data <- ctec_data_raw |> 
-  # consider empty strings as missing values
-  mutate(
-    school = na_if(school, ""),
-    dept = na_if(dept, ""),
-    course_term = na_if(course_term, ""),
-    instructor = na_if(instructor, "")
-  ) |> 
-  # fill in missing values from the nearest value above
-  fill(school, dept, course_num, course_term, instructor, inst_rating, 
-       course_rating, learn_rating, challenge_rating, interest_rating, 
-       hours_spent, .direction = "down")
-
-# check for missingness
-ctec_data |> summarise(across(everything(), ~ sum(is.na(.))))
-
-```
-
 ## EDA
 
 ### The Background
@@ -130,145 +101,23 @@ However, CTECs do not provide a built-in mechanism to compare data across course
 
 **Which school spends the most time on their classes?**
 
-```{r}
-# separate data by school
-mcmk_data <- ctec_data[ctec_data$school == 'mcmk', ]
-jour_data <- ctec_data[ctec_data$school == 'jour', ]
-comm_data <- ctec_data[ctec_data$school == 'comm', ]
-bien_data <- ctec_data[ctec_data$school == 'bien', ]
-sesp_data <- ctec_data[ctec_data$school == 'sesp', ]
-wnbg_data <- ctec_data[ctec_data$school == 'wnbg', ]
-
-# averages of time spent across schools
-labels <- c("mcmk", "jour", "comm", "bien", "sesp", "wnbg")
-means_hours <- c(
-  mean(mcmk_data$hours_spent),
-  mean(jour_data$hours_spent),
-  mean(comm_data$hours_spent),
-  mean(bien_data$hours_spent),
-  mean(sesp_data$hours_spent),
-  mean(wnbg_data$hours_spent)
-)
-avg_hours <- data.frame(labels, means_hours)
-
-# bar plot of hours spent across schools
-plot1 <- ggplot(avg_hours, aes(x = labels, y = means_hours, fill = labels)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(
-    values = c(
-      "#836EAA",
-      "#B6ACD1",
-      "#836EAA",
-      "#4E2A84",
-      "#B6ACD1",
-      "#B6ACD1"
-      )
-  ) +
-  theme_fivethirtyeight() +
-  theme(
-    axis.title.x = element_text(size = 8, margin = margin(t = 10)),
-    axis.title.y = element_text(size = 8, margin = margin(r = 10)),
-    title = element_text(size = 8),
-    legend.position = "none",
-    legend.title = element_blank()
-  ) +
-  labs(
-    title = "Average hours per week spent per class", 
-    x = "school", 
-    y = "time spent (hrs)"
-  )
-
-ggsave("schools_hours_spent.png", plot1, width = 6, height = 4, units = "in")
-
-```
-
 ![Hours Spent Studying By School](schools_hours_spent.png)
 
 We can see that McCormick students spend **significantly more** hours on average (7.41h) than students from other schools. Medill (5.63h) and Bienen (5.69h) students spend more time than students from other schools (\<5h).
 
 **Which school learns the most from their classes?**
 
-```{r}
-
-# averages of amount learned across schools
-means_2 <- c(
-  mean(mcmk_data$learn_rating),
-  mean(jour_data$learn_rating),
-  mean(comm_data$learn_rating),
-  mean(bien_data$learn_rating),
-  mean(sesp_data$learn_rating),
-  mean(wnbg_data$learn_rating)
-)
-avg_learned <- data.frame(labels, means_2)
-
-# bar plot of hours spent across schools
-plot2 <- ggplot(avg_learned, aes(x = labels, y = means_2, fill = labels)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(
-    values = c(
-      "#B6ACD1",
-      "#836EAA",
-      "#836EAA",
-      "#4E2A84",
-      "#B6ACD1",
-      "#836EAA"
-      )
-  ) +
-  theme_fivethirtyeight() +
-  theme(
-    axis.title.x = element_text(size = 10, margin = margin(t = 10)),
-    axis.title.y = element_text(size = 10, margin = margin(r = 10)),
-    legend.position = "none",
-    legend.title = element_blank()
-  ) +
-  labs(
-    title = "Average ratings of amount learned", 
-    x = "school", 
-    y = "rating of amount learned"
-  )
-
-```
+![Amount Learned By School](schools_amount_learned.png)
 
 The differences in ratings here are less drastic, with students from all schools answering an average of 4+ on a 1 to 6 scale. However, McCormick students **learned the most** on average, being the only school with an average rating greater than 5.
 
 **Does putting in more time make the class more rewarding?** 
 
-```{r}
-
-# scatterplot of amount learned by hours spent across schools
-plot3 <- ggplot(
-  data = ctec_data,
-  mapping = aes(x = hours_spent, y = learn_rating, color = school)
-  ) +
-  geom_point(stat = "identity") +
-  scale_color_manual(
-    values = c(
-      "#1f77b4",
-      "#ff7f0e",
-      "#2ca02c",
-      "#d62728",
-      "#9467bd",
-      "#8c564b"
-      )
-    ) +
-  theme_fivethirtyeight() +
-  theme(
-    title = element_text(size = 10),
-    axis.title.x = element_text(size = 10, margin = margin(t = 10)),
-    axis.title.y = element_text(size = 10, margin = margin(r = 10)),
-    legend.position = c(1, 0),
-    legend.justification = c(1, 0),
-    legend.title = element_blank()
-  ) +
-  labs(
-    title = "Amount learned rating vs. hours spent, per course", 
-    x = "time spent (hrs)", 
-    y = "rating of amount learned"
-  )
-
-```
+![Time Spent Versus Amount Learned](time_learning_scatterplot.png)
 
 It seems that a relationship does exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
+
+Notably, *McCormick* classes were the only ones requiring **over 12.5 hours** of work. *SESP* classes were the only ones with a learning rating of **less than 2.**
 
 ## Progress Summary
 For this progress memo, I completed over 10 hours of data collection, cleaned the data, and am currently exploring the fourth of the ten questions I was interested in, described above. For the remaining questions, my next steps will be as follows:
