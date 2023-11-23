@@ -188,6 +188,99 @@ We can see that McCormick students spend **significantly more** hours on average
 
 **Which school learns the most from their classes?**
 
+```{r}
+
+# averages of amount learned across schools
+means_2 <- c(
+  mean(mcmk_data$learn_rating),
+  mean(jour_data$learn_rating),
+  mean(comm_data$learn_rating),
+  mean(bien_data$learn_rating),
+  mean(sesp_data$learn_rating),
+  mean(wnbg_data$learn_rating)
+)
+avg_learned <- data.frame(labels, means_2)
+
+# bar plot of hours spent across schools
+plot2 <- ggplot(avg_learned, aes(x = labels, y = means_2, fill = labels)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(
+    values = c(
+      "#B6ACD1",
+      "#836EAA",
+      "#836EAA",
+      "#4E2A84",
+      "#B6ACD1",
+      "#836EAA"
+      )
+  ) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.title.x = element_text(size = 10, margin = margin(t = 10)),
+    axis.title.y = element_text(size = 10, margin = margin(r = 10)),
+    legend.position = "none",
+    legend.title = element_blank()
+  ) +
+  labs(
+    title = "Average ratings of amount learned", 
+    x = "school", 
+    y = "rating of amount learned"
+  )
+
+```
+
 The differences in ratings here are less drastic, with students from all schools answering an average of 4+ on a 1 to 6 scale. However, McCormick students **learned the most** on average, being the only school with an average rating greater than 5.
 
-**Does putting in more time make the class more rewarding?** It seems that a relationship does exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
+**Does putting in more time make the class more rewarding?** 
+
+```{r}
+
+# scatterplot of amount learned by hours spent across schools
+plot3 <- ggplot(
+  data = ctec_data,
+  mapping = aes(x = hours_spent, y = learn_rating, color = school)
+  ) +
+  geom_point(stat = "identity") +
+  scale_color_manual(
+    values = c(
+      "#1f77b4",
+      "#ff7f0e",
+      "#2ca02c",
+      "#d62728",
+      "#9467bd",
+      "#8c564b"
+      )
+    ) +
+  theme_fivethirtyeight() +
+  theme(
+    title = element_text(size = 10),
+    axis.title.x = element_text(size = 10, margin = margin(t = 10)),
+    axis.title.y = element_text(size = 10, margin = margin(r = 10)),
+    legend.position = c(1, 0),
+    legend.justification = c(1, 0),
+    legend.title = element_blank()
+  ) +
+  labs(
+    title = "Amount learned rating vs. hours spent, per course", 
+    x = "time spent (hrs)", 
+    y = "rating of amount learned"
+  )
+
+```
+
+It seems that a relationship does exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
+
+## Progress Summary
+For this progress memo, I completed over 10 hours of data collection, cleaned the data, and am currently exploring the fourth of the ten questions I was interested in, described above. For the remaining questions, my next steps will be as follows:
+
+- Does putting in more time make the class more rewarding?: **Break up the total plot to look at each school in its own plot**
+- Which school has the best professors? Best classes?: **define a new instructor measure using the inst_rating and interest_rating**, then **take the means of the new instructor rating and course_rating for each school and compare using bar plots**, also **filter for positive and negative affect codewords to complete a sentiment analysis on the CTECs** in order to better inform the course ratings
+- Which school is the best overall? **make radar plots for each school**
+- Does having a better professor influence how much students feel that they learn? **use the new instructor measure and compare to learn_rating using a scatterplot** 
+- Who is the most liked and most hated teacher in each department? **use the new instructor rating to find which teachers have the highest and lowest ratings**
+- Which classes have the most opinionated CTECs, either good or bad? **see which sentiment analyses are the most positive and most negative**
+- For classes with more than one teacher, who taught it best? **filter for classes with unique instructor values but same course and department numbers**, then **compare instructor ratings**
+- What are the best classes overall and in each department? **create enjoyment rating based on combination of inst_rating, course_rating, learn_rating, and interest_rating**, consider including challenge_rating, then **find teachers with the highest enjoyment ratings** in each department and overall
+- What comparisons can we make by level (100-200-300)? **group .by level and run analyses that may be of interest for these groups**, like if students feel like they learn more depending on level for example 
+
+I think my progress is in great shape. I estimate I still have about 10 hours of work left. This project was very heavy on data collection, as you know. 

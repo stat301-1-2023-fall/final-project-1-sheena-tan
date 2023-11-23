@@ -3002,6 +3002,7 @@ vertical-align: -.125em;
   <li><a href="#the-background" id="toc-the-background" class="nav-link" data-scroll-target="#the-background">The Background</a></li>
   <li><a href="#here-is-what-i-found." id="toc-here-is-what-i-found." class="nav-link" data-scroll-target="#here-is-what-i-found.">Here is what I found.</a></li>
   </ul></li>
+  <li><a href="#progress-summary" id="toc-progress-summary" class="nav-link" data-scroll-target="#progress-summary">Progress Summary</a></li>
   </ul>
 </nav>
 </div>
@@ -3148,8 +3149,25 @@ Github Repo Link
 <p>We can see that McCormick students spend <strong>significantly more</strong> hours on average (7.41h) than students from other schools. Medill (5.63h) and Bienen (5.69h) students spend more time than students from other schools (&lt;5h).</p>
 <p><strong>Which school learns the most from their classes?</strong></p>
 <p>The differences in ratings here are less drastic, with students from all schools answering an average of 4+ on a 1 to 6 scale. However, McCormick students <strong>learned the most</strong> on average, being the only school with an average rating greater than 5.</p>
-<p><strong>Does putting in more time make the class more rewarding?</strong> It seems that a relationship does exist. For example, <strong><em>NONE</em></strong> of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn’t take a lot of time to feel like you learned a lot, but if it does take time, you’ll feel like you learned from it.</p>
+<p><strong>Does putting in more time make the class more rewarding?</strong></p>
+<p>It seems that a relationship does exist. For example, <strong><em>NONE</em></strong> of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn’t take a lot of time to feel like you learned a lot, but if it does take time, you’ll feel like you learned from it.</p>
 </section>
+</section>
+<section id="progress-summary" class="level2">
+<h2 class="anchored" data-anchor-id="progress-summary">Progress Summary</h2>
+<p>For this progress memo, I completed over 10 hours of data collection, cleaned the data, and am currently exploring the fourth of the ten questions I was interested in, described above. For the remaining questions, my next steps will be as follows:</p>
+<ul>
+<li>Does putting in more time make the class more rewarding?: <strong>Break up the total plot to look at each school in its own plot</strong></li>
+<li>Which school has the best professors? Best classes?: <strong>define a new instructor measure using the inst_rating and interest_rating</strong>, then <strong>take the means of the new instructor rating and course_rating for each school and compare using bar plots</strong>, also <strong>filter for positive and negative affect codewords to complete a sentiment analysis on the CTECs</strong> in order to better inform the course ratings</li>
+<li>Which school is the best overall? <strong>make radar plots for each school</strong></li>
+<li>Does having a better professor influence how much students feel that they learn? <strong>use the new instructor measure and compare to learn_rating using a scatterplot</strong></li>
+<li>Who is the most liked and most hated teacher in each department? <strong>use the new instructor rating to find which teachers have the highest and lowest ratings</strong></li>
+<li>Which classes have the most opinionated CTECs, either good or bad? <strong>see which sentiment analyses are the most positive and most negative</strong></li>
+<li>For classes with more than one teacher, who taught it best? <strong>filter for classes with unique instructor values but same course and department numbers</strong>, then <strong>compare instructor ratings</strong></li>
+<li>What are the best classes overall and in each department? <strong>create enjoyment rating based on combination of inst_rating, course_rating, learn_rating, and interest_rating</strong>, consider including challenge_rating, then <strong>find teachers with the highest enjoyment ratings</strong> in each department and overall</li>
+<li>What comparisons can we make by level (100-200-300)? <strong>group .by level and run analyses that may be of interest for these groups</strong>, like if students feel like they learn more depending on level for example</li>
+</ul>
+<p>I think my progress is in great shape. I estimate I still have about 10 hours of work left. This project was very heavy on data collection, as you know.</p>
 </section>
 
 </main>
