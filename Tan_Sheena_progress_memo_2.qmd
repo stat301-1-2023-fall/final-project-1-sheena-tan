@@ -10,11 +10,11 @@ format:
   html:
     toc: true
     embed-resources: true
-    
+
 execute:
   echo: false
   warning: false
-
+  
 from: markdown+emoji 
 ---
 
@@ -41,12 +41,30 @@ As discussed with Professor Sass, I finished scraping data from the most recent 
 5. Journalism (JOUR) for Medill,
 6. and School of Education & Social Policy Core (SESP) for SESP.
 
+
+### Data Description
+
 The data has a total of 5137 objects across 12 variables.
 
-1. `school`: categorical variable; the school the department is from, coded `mcmk` for McCormick, `jour` for Medill, `comm` for Comms, `bien` for Bienen, `sesp` for SESP, and `wnbg` for Weinberg
-2. `dept`: categorical variable; the department the course is offered through, coded `psych` for Psychology, `sesp` for SESP Core, `music` for Music, `comm_st` for Communication Studies , `jour` for Journalism, and `civ_env` for Civil and Environmental Engineering
+1. `school`: categorical variable; the school the department is from,
+-  `mcmk` for McCormick, 
+-  `jour` for Medill, 
+-  `comm` for Comms,
+-  `bien` for Bienen,
+-  `sesp` for SESP,
+-  and `wnbg` for Weinberg
+2. `dept`: categorical variable; the department the course is offered through, 
+-  `psych` for Psychology,
+-  `sesp` for SESP Core, 
+-  `music` for Music, 
+-  `comm_st` for Communication Studies , 
+-  `jour` for Journalism, 
+-  and `civ_env` for Civil and Environmental Engineering
 3. `course_num`: the three digit course number
-4. `course_term`: categorical variable; the quarter the course was offered, coded `fall` for Fall 2022, `winter` for Winter 2023, and `spring` for Spring 2023
+4. `course_term`: categorical variable; the quarter the course was offered, 
+-  `fall` for Fall 2022,
+-  `winter` for Winter 2023, 
+-  and `spring` for Spring 2023
 5. `instructor`: the name of the instructor
 6. `inst_rating`: the mean of students' responses to the prompt, "Provide an overall rating of the instruction." rated out of 6
 7. `course_rating`: the mean of students' responses to the prompt, "Provide an overall rating of the course" rated out of 6
@@ -56,9 +74,17 @@ The data has a total of 5137 objects across 12 variables.
 11. `hours_spent`: the mean of students' reponses to the prompt, "Estimate the average number of hours per week you spent on this course outside of class and lab time."
 12. `essay`: text responses to the prompt, "Please summarize your reaction to this course focusing on the aspects that were most important to you."
 
-```{r}
+### Data Preparation
+For time limitations during data scraping, the raw data did repeat values for each student essay response. Instead, the first instace of every class had the complete data entered, but following entries for that class were left empty. 
+
+To address these missing values, cleaning occured in three main steps: First, string values were changed to be missing values when empty. Second, missing values were filled from the nearest values above. Finally, the data was examined for missingess and no remaining missingness (other than in the `essay` responses) was found. 
+
+```{r results = 'hide'} 
 # install packages
 library(tidyverse)
+library(ggthemes)
+library(patchwork)
+library(cowplot)
 
 # read in data
 ctec_data_raw <- read.csv("data/ctec_data.csv")
@@ -77,5 +103,91 @@ ctec_data <- ctec_data_raw |>
        course_rating, learn_rating, challenge_rating, interest_rating, 
        hours_spent, .direction = "down")
 
+# check for missingness
+ctec_data |> summarise(across(everything(), ~ sum(is.na(.))))
+
 ```
 
+## EDA
+
+### The Background
+In the four years that I've been at Northwestern, I've heard my fair share of anecdotes, stereotypes, and stories about the students and classes in the different schools. *SESP classes are easy, but students don't learn anything*; or *McCormick kids never leave their dorms because of how long they have to study*; or this or that class is really great, or this or that professor is really horrible. 
+
+However, CTECs do not provide a built-in mechanism to compare data across courses or across teachers, in a department or across departments. This project wanted to compare data across schools and classes to investigate any patterns that may be of interest, like:
+
+- Which school learns the most from their classes?
+- Which school spends the most time on their classes?
+- Does putting in more time make the class more rewarding?
+- Which school has the best professors? Best classes?
+- Does having a better professor influence how much students feel that they learn?
+- Who is the most liked and most hated teacher in each department?
+- Which classes have the most opinionated CTECs, either good or bad?
+- For classes with more than one teacher, who taught it best?
+- What are the best classes overall and in each department? 
+- What comparisons can we make by level (100-200-300)? 
+
+### Here is what I found.
+
+**Which school spends the most time on their classes?**
+
+```{r}
+# separate data by school
+mcmk_data <- ctec_data[ctec_data$school == 'mcmk', ]
+jour_data <- ctec_data[ctec_data$school == 'jour', ]
+comm_data <- ctec_data[ctec_data$school == 'comm', ]
+bien_data <- ctec_data[ctec_data$school == 'bien', ]
+sesp_data <- ctec_data[ctec_data$school == 'sesp', ]
+wnbg_data <- ctec_data[ctec_data$school == 'wnbg', ]
+
+# averages of time spent across schools
+labels <- c("mcmk", "jour", "comm", "bien", "sesp", "wnbg")
+means_hours <- c(
+  mean(mcmk_data$hours_spent),
+  mean(jour_data$hours_spent),
+  mean(comm_data$hours_spent),
+  mean(bien_data$hours_spent),
+  mean(sesp_data$hours_spent),
+  mean(wnbg_data$hours_spent)
+)
+avg_hours <- data.frame(labels, means_hours)
+
+# bar plot of hours spent across schools
+plot1 <- ggplot(avg_hours, aes(x = labels, y = means_hours, fill = labels)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(
+    values = c(
+      "#836EAA",
+      "#B6ACD1",
+      "#836EAA",
+      "#4E2A84",
+      "#B6ACD1",
+      "#B6ACD1"
+      )
+  ) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.title.x = element_text(size = 8, margin = margin(t = 10)),
+    axis.title.y = element_text(size = 8, margin = margin(r = 10)),
+    title = element_text(size = 8),
+    legend.position = "none",
+    legend.title = element_blank()
+  ) +
+  labs(
+    title = "Average hours per week spent per class", 
+    x = "school", 
+    y = "time spent (hrs)"
+  )
+
+ggsave("schools_hours_spent.png", plot1, width = 6, height = 4, units = "in")
+
+```
+
+![Hours Spent Studying By School](schools_hours_spent.png)
+
+We can see that McCormick students spend **significantly more** hours on average (7.41h) than students from other schools. Medill (5.63h) and Bienen (5.69h) students spend more time than students from other schools (\<5h).
+
+**Which school learns the most from their classes?**
+
+The differences in ratings here are less drastic, with students from all schools answering an average of 4+ on a 1 to 6 scale. However, McCormick students **learned the most** on average, being the only school with an average rating greater than 5.
+
+**Does putting in more time make the class more rewarding?** It seems that a relationship does exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
