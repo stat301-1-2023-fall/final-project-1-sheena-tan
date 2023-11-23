@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sheena Tan">
-<meta name="dcterms.date" content="2023-11-22">
+<meta name="dcterms.date" content="2023-11-23">
 
 <title>Progress Memo 2</title>
 <style>
@@ -2987,7 +2987,16 @@ vertical-align: -.125em;
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#updated-data-memo" id="toc-updated-data-memo" class="nav-link active" data-scroll-target="#updated-data-memo">Updated Data Memo</a>
+  <ul class="collapse">
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">Data Source</a></li>
+  </ul></li>
+  </ul>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -3012,7 +3021,7 @@ Data Science 1 with R (STAT 301-1)</p><p></p>
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 22, 2023</p>
+      <p class="date">November 23, 2023</p>
     </div>
   </div>
   
@@ -3035,6 +3044,37 @@ Github Repo Link
 <p><a href="https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git">https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git</a></p>
 </div>
 </div>
+<section id="updated-data-memo" class="level2">
+<h2 class="anchored" data-anchor-id="updated-data-memo">Updated Data Memo</h2>
+<section id="data-source" class="level3">
+<h3 class="anchored" data-anchor-id="data-source">Data Source</h3>
+<p>I am using data from Northwestern’s Course and Teacher Evaluation Council (CTEC) system, which is data available to students at Northwestern University. These evaluations provide ratings made by previous students regarding various courses and their instructor, including information like how much time the student spent on the course, what degree requirements the course fulfilled for the student, what year and school the student is in, and how they would rate the instruction and the course across several categories.</p>
+<p>As discussed with Professor Sass, I finished scraping data from the most recent academic year (2022-23) across various undergraduate courses, organizing the data by school and department. I took data from six representative departments, for each of the six Northwestern schools.</p>
+<ol type="1">
+<li>Psychology (PSYCH) for Weinberg,</li>
+<li>Civil and Environmental Engineering (CIV_ENV) for McCormick,</li>
+<li>Music (MUSIC) for Bienen,</li>
+<li>Communication Studies (COMMS) for the School of Communications,</li>
+<li>Journalism (JOUR) for Medill,</li>
+<li>and School of Education &amp; Social Policy Core (SESP) for SESP.</li>
+</ol>
+<p>The data has a total of 5137 objects across 12 variables.</p>
+<ol type="1">
+<li><code>school</code>: categorical variable; the school the department is from, coded <code>mcmk</code> for McCormick, <code>jour</code> for Medill, <code>comm</code> for Comms, <code>bien</code> for Bienen, <code>sesp</code> for SESP, and <code>wnbg</code> for Weinberg</li>
+<li><code>dept</code>: categorical variable; the department the course is offered through, coded <code>psych</code> for Psychology, <code>sesp</code> for SESP Core, <code>music</code> for Music, <code>comm_st</code> for Communication Studies , <code>jour</code> for Journalism, and <code>civ_env</code> for Civil and Environmental Engineering</li>
+<li><code>course_num</code>: the three digit course number</li>
+<li><code>course_term</code>: categorical variable; the quarter the course was offered, coded <code>fall</code> for Fall 2022, <code>winter</code> for Winter 2023, and <code>spring</code> for Spring 2023</li>
+<li><code>instructor</code>: the name of the instructor</li>
+<li><code>inst_rating</code>: the mean of students’ responses to the prompt, “Provide an overall rating of the instruction.” rated out of 6</li>
+<li><code>course_rating</code>: the mean of students’ responses to the prompt, “Provide an overall rating of the course” rated out of 6</li>
+<li><code>learn_rating</code>: the mean of students’ responses to the prompt, “Estimate how much you learned in the course.” rated out of 6</li>
+<li><code>challenge_rating</code>: the mean of students’ responses to the prompt, “Rate the effectiveness of the course in challenging you intellectually.” rated out of 6</li>
+<li><code>interest_rating</code>: the mean of students’ responses to the prompt, “Rate the effectiveness of the instructor in stimulating your interest in the subject.” rated out of 6</li>
+<li><code>hours_spent</code>: the mean of students’ reponses to the prompt, “Estimate the average number of hours per week you spent on this course outside of class and lab time.”</li>
+<li><code>essay</code>: text responses to the prompt, “Please summarize your reaction to this course focusing on the aspects that were most important to you.”</li>
+</ol>
+</section>
+</section>
 
 </main>
 <!-- /main column -->
