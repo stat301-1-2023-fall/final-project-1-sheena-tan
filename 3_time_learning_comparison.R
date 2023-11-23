@@ -25,5 +25,5 @@ plot3 <- ggplot(ctec_data, aes(hours_spent, learn_rating, color = school)) +
     y = "rating of amount learned"
   )
 
-ggsave("time_learning_scatterplot.png", plot3, width = 6, height = 4, units = "in")
+ggsave("figures/time_learning_scatterplot.png", plot3, width = 6, height = 4, units = "in")
 

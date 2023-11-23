@@ -51,4 +51,4 @@ plot1 <- ggplot(avg_hours, aes(x = labels, y = means_hours, fill = labels)) +
     y = "time spent (hrs)"
   )
 
-ggsave("schools_hours_spent.png", plot1, width = 6, height = 4, units = "in")
+ggsave("figures/schools_hours_spent.png", plot1, width = 6, height = 4, units = "in")

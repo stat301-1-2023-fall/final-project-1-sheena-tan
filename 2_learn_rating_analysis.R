@@ -42,4 +42,4 @@ plot2 <- ggplot(avg_learned, aes(x = labels, y = means_2, fill = labels)) +
     y = "rating of amount learned"
   )
 
-ggsave("schools_amount_learned.png", plot2, width = 6, height = 4, units = "in")
+ggsave("figures/schools_amount_learned.png", plot2, width = 6, height = 4, units = "in")

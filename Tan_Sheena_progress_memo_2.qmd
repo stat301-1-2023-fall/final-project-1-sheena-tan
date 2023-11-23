@@ -101,19 +101,19 @@ However, CTECs do not provide a built-in mechanism to compare data across course
 
 **Which school spends the most time on their classes?**
 
-![Hours Spent Studying By School](schools_hours_spent.png)
+![Hours Spent Studying By School](figures/schools_hours_spent.png)
 
 We can see that McCormick students spend **significantly more** hours on average (7.41h) than students from other schools. Medill (5.63h) and Bienen (5.69h) students spend more time than students from other schools (\<5h).
 
 **Which school learns the most from their classes?**
 
-![Amount Learned By School](schools_amount_learned.png)
+![Amount Learned By School](figures/schools_amount_learned.png)
 
 The differences in ratings here are less drastic, with students from all schools answering an average of 4+ on a 1 to 6 scale. However, McCormick students **learned the most** on average, being the only school with an average rating greater than 5.
 
 **Does putting in more time make the class more rewarding?** 
 
-![Time Spent Versus Amount Learned](time_learning_scatterplot.png)
+![Time Spent Versus Amount Learned](figures/time_learning_scatterplot.png)
 
 It seems that a relationship does exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. At the same time, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. In other words, it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
 
