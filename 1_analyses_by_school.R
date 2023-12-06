@@ -290,13 +290,6 @@ ggsave("figures/instructor_learning_scatterplot.png", plot6, width = 6, height =
 
 ## ANALYSIS 7 ----
 
-# exploratory: scatterplot of course_rating and challenge_rating
-# ggplot(ctec_data, aes(course_rating, challenge_rating, color = school)) +
-#   geom_point(stat = "identity") +
-#   scale_color_manual(
-#     values = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b")
-#   )
-
 # averages of course rating by schools
 avg_course_rating <- ctec_data |> 
   group_by(school) |> 
@@ -357,6 +350,9 @@ avg_sentiment <- ctec_data_short |>
 plot8 <- ctec_data_short |> 
   ggplot(aes(essay_sentiment, fill = school)) +
   geom_boxplot() +
+  scale_fill_manual(
+    values = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b")
+  ) +
   theme_fivethirtyeight() +
   theme(
     axis.title.x = element_text(size = 8),
@@ -374,15 +370,173 @@ plot8 <- ctec_data_short |>
 ggsave("figures/schools_sentiment_rating.png", plot8, width = 6, height = 4, units = "in")
 
 
+## ANALYSIS 9 ----
 
+# data wrangling into format for radar chart
+radar_data <- avg_course_rating |> 
+  right_join(avg_learned, by = "school") |> 
+  right_join(avg_inst_rating, by = "school") |>
+  # changing scale from out of 12 to out of 6
+  mutate(means = means / 2) |> 
+  pivot_longer(
+    cols = c(rating, hours, means), 
+    names_to = "name", 
+    values_to = "value"
+  ) |> 
+  pivot_wider(names_from = school, values_from = value)
 
+# bienen radar chart
+plot9a <- ggplot(radar_data, aes(x = name, y = bien)) +
+  geom_col(width = 1, fill = "#1f77b4") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    title = element_text(size = 8)
+  ) +
+  labs(title = "Bienen") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+# comm
+plot9b <- ggplot(radar_data, aes(x = name, y = comm)) +
+  geom_col(width = 1, fill = "#ff7f0e") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    title = element_text(size = 8)
+  ) +
+  labs(title = "Comms") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+# jour
+plot9c <- ggplot(radar_data, aes(x = name, y = jour)) +
+  geom_col(width = 1, fill = "#2ca02c") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    title = element_text(size = 8)
+  ) +
+  labs(title = "Medill") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+# mcmk
+plot9d <- ggplot(radar_data, aes(x = name, y = mcmk)) +
+  geom_col(width = 1, fill = "#d62728") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    title = element_text(size = 8)
+  ) +
+  labs(title = "McCormick") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+# sesp
+plot9e <- ggplot(radar_data, aes(x = name, y = sesp)) +
+  geom_col(width = 1, fill = "#9467bd") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(),
+    title = element_text(size = 8)
+  ) +
+  labs(title = "SESP") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+# wnbg
+plot9f <- ggplot(radar_data, aes(x = name, y = wnbg)) +
+  geom_col(width = 1, fill = "#8c564b") +
+  geom_hline(yintercept = 1:6, linetype = "dotted") +
+  geom_segment(x = 0.5:2.5, y = 0, xend = 0.5:2.5, yend = 6) +
+  scale_x_discrete(name = NULL, expand = c(0, 0)) +
+  scale_y_continuous(name = NULL, expand = c(0, 0)) +
+  theme_fivethirtyeight() +
+  theme(
+    axis.text = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks = element_blank(), 
+    title = element_text(size = 8)
+  ) +
+  labs(title = "Weinberg") +
+  annotate(
+    geom = "text",
+    label = c("Learning", "Course", "Instructor"),
+    x = c(0.9, 2, 3.1), 
+    y = c(8, 7, 8),
+    size = 2
+  ) +
+  coord_polar()
 
+plot9a + plot9b
+ggsave2("figures/radar_bien_comm.png", width = 6, height = 3.3, units = "in")
 
+plot9c + plot9d
+ggsave2("figures/radar_jour_mcmk.png", width = 6, height = 3.3, units = "in")
+
+plot9e + plot9f
+ggsave2("figures/radar_sesp_wnbg.png", width = 6, height = 3.3, units = "in")
 
 
 
