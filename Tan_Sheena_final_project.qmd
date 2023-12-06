@@ -142,11 +142,22 @@ We've looked at which schools have the best professors. How about classes?
 
 From a numerical rating alone, it's difficult to rank which school's classes are definitively best. Bienen classes are rated worse than all the other schools on average (4.44), but even the school with the highest average course ratings, Comms (5.16), was not that much higher in ratings than the other schools: Medill (4.65), McCormick (4.90), SESP (4.72), and Weinberg (5.02).
 
-Luckily, CTECs provide us with a powerful measure to analyze course information: open-ended responses. Reading through and analyzing all 5000+ short-response entries would take us forever, but not for our computers! 
+CTECs provide us with another powerful measure to analyze course information: open-ended responses. Reading through and analyzing all 5000+ short-response entries would take us forever, but not for our computers! 
 
-We perform a sentiment analysis on the open-ended essay responses and define a new measure `sentiment_rating` denoting how positive the student feedback is for each course.  
+We perform a [sentiment analysis](https://www.tidytextmining.com/sentiment) on the open-ended essay responses and define a new measure `sentiment_rating` denoting how positive the student feedback is for each course. We will utilize the `afinn` sentiment lexicon in the `tidytext` package to determine what is considered positive or negative. The AFINN lexicon assigns a score between -5 and 5 to words of various sentiments, with negative scores indicating negative sentiment and positive scores indicating positive sentiment.
 
 Let's see what these short-response entries have to tell us.
+
+
+![Sentiment Ratings by School](figures/schools_sentiment_rating.png)
+
+
+We define a new variable, `essay_sentiment`, which averages the sum of all of the sentiment scores for each essay response by course, section, and instructor by the number of responses there were for that course, section, and instructor. The higher the sentiment score, the more positive the responses were collectively, and the lower the sentiment score, the more negative the responses were collectively.
+
+The results reinforce what we see from the original course rating measure. Bienen course sentiments average lower than the others (1.44), and Comms course sentiments slightly higher (1.81), but none of the schools are different enough from each other to definitively argue that certain schools' courses are better than others: Medill (1.659030), McCormick (1.486994), SESP (1.674196), Weinberg (1.474052).
+
+Course sentiment typically **averages to be positive overall**, which might show that Northwestern courses are generally pretty satisfactory, but could also be due to a general tendency for people to be polite when writing about their opinions publicly.
+
 
 ## Progress Summary
 For this progress memo, I completed over 10 hours of data collection, cleaned the data, and am currently exploring the fourth of the ten questions I was interested in, described above. For the remaining questions, my next steps will be as follows:
@@ -154,7 +165,7 @@ For this progress memo, I completed over 10 hours of data collection, cleaned th
 DONE - Does putting in more time make the class more rewarding?: **Break up the total plot to look at each school in its own plot**
 DONE - Which school has the best professors? **define a new instructor measure using the inst_rating and interest_rating**, then **take the means of the new instructor rating for each school and compare using bar plots**
 DONE - Does having a better professor influence how much students feel that they learn? **use the new instructor measure and compare to learn_rating using a scatterplot** 
-- Which school has the best classes? **take means of course_rating for each school and compare using bar plot.** ALSO **filter for positive and negative affect codewords to complete a sentiment analysis on the CTECs** in order to better inform the course ratings
+DONE - Which school has the best classes? **take means of course_rating for each school and compare using bar plot.** ALSO **filter for positive and negative affect codewords to complete a sentiment analysis on the CTECs** in order to better inform the course ratings
 - Which school is the best overall? **make radar plots for each school**
 - Who is the most liked and most hated teacher in each department? **use the new instructor rating to find which teachers have the highest and lowest ratings**
 - Which classes have the most opinionated CTECs, either good or bad? **see which sentiment analyses are the most positive and most negative**

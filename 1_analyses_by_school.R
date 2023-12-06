@@ -1,5 +1,7 @@
 # install packages
 library(tidyverse)
+library(tidytext)
+library(textdata)
 library(ggthemes)
 library(patchwork)
 library(cowplot)
@@ -331,7 +333,48 @@ ggsave("figures/schools_course_rating.png", plot7, width = 6, height = 4, units 
 
 
 ## ANALYSIS 8 ----
+
+# AFINN lexicon rating sentiment keywords from -5 to 5 
+lexicon <- get_sentiments("afinn")
+
 # sentiment analysis
+ctec_data_short <- ctec_data |> 
+  # split essay column responses into tokens, flattening into one-token-per-row
+  unnest_tokens(word, essay) |> 
+  inner_join(lexicon) |> 
+  # sum per course
+  group_by(school, dept, course_num, course_term, instructor, inst_rating, 
+           course_rating, learn_rating, challenge_rating, interest_rating, 
+           hours_spent) |> 
+  summarize(essay_sentiment = sum(value) / n())
+
+# averages of sentiment rating by schools
+avg_sentiment <- ctec_data_short |> 
+  group_by(school) |> 
+  summarise(sentiment = mean(essay_sentiment))
+
+# box plot of sentiment rating across schools
+plot8 <- ctec_data_short |> 
+  ggplot(aes(essay_sentiment, fill = school)) +
+  geom_boxplot() +
+  theme_fivethirtyeight() +
+  theme(
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    axis.text.y = element_blank(),
+    title = element_text(size = 8),
+    legend.title = element_blank()
+  ) +
+  labs(
+    title = "Average sentiment rating of courses", 
+    x = "sentiment rating",
+    y = NULL
+  )
+
+ggsave("figures/schools_sentiment_rating.png", plot8, width = 6, height = 4, units = "in")
+
+
+
 
 
 
