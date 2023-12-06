@@ -16,7 +16,7 @@ means_2 <- c(
 avg_learned <- data.frame(labels, means_2)
 
 # bar plot of hours spent across schools
-plot2 <- ggplot(avg_learned, aes(x = labels, y = means_2, fill = labels)) +
+plot2 <- ggplot(avg_learned, aes(labels, means_2, fill = labels)) +
   geom_bar(stat = "identity") +
   scale_fill_manual(
     values = c(
@@ -43,3 +43,5 @@ plot2 <- ggplot(avg_learned, aes(x = labels, y = means_2, fill = labels)) +
   )
 
 ggsave("figures/schools_amount_learned.png", plot2, width = 6, height = 4, units = "in")
+
+print(means_2)

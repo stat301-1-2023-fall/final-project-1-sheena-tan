@@ -1,0 +1,165 @@
+---
+title: "2022-23 CTEC Data Exploratory Analysis"
+subtitle: |
+  | Final Project 
+  | Data Science 1 with R (STAT 301-1)
+author: "Sheena Tan"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+
+execute:
+  echo: false
+  warning: false
+  
+from: markdown+emoji 
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git](https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git)
+
+:::
+
+## Introduction
+
+### Data Source
+
+I am using data from Northwestern's [Course and Teacher Evaluation Council (CTEC)](https://www.northwestern.edu/ctec) system, which is data available to students at Northwestern University. These evaluations provide ratings made by previous students regarding various Northwestern courses and their instructor(s), including information like how much time the student spent on the course, what degree requirements the course fulfilled for the student, what year and school the student is in, and ratings of the instruction and the course across several categories. 
+
+The data used in this project was scraped from [CTEC data](https://www.northwestern.edu/ctec) from the most recent academic year (2022-23) across six representative course departments, for each of the six Northwestern schools: 
+
+1. Psychology (PSYCH) for Weinberg,
+2. Civil and Environmental Engineering (CIV_ENV) for McCormick,
+3. Music (MUSIC) for Bienen, 
+4. Communication Studies (COMMS) for the School of Communications,
+5. Journalism (JOUR) for Medill,
+6. and School of Education & Social Policy Core (SESP) for SESP.
+
+
+### Data Description
+
+The data has a total of **5137 objects** across **12 variables**.
+
+1. `school`: categorical variable; the school the department is from -- denoted `mcmk` for McCormick, `jour` for Medill, `comm` for Comms, `bien` for Bienen, `sesp` for SESP, and `wnbg` for Weinberg
+2. `dept`: categorical variable; the department the course is offered through -- denoted `psych` for Psychology, `sesp` for SESP Core, `music` for Music, `comm_st` for Communication Studies , `jour` for Journalism, and `civ_env` for Civil and Environmental Engineering
+3. `course_num`: the three digit course number
+4. `course_term`: categorical variable; the quarter the course was offered -- denoted `fall` for Fall 2022, `winter` for Winter 2023, and `spring` for Spring 2023
+5. `instructor`: the name of the instructor
+6. `inst_rating`: the mean of students' responses to the prompt, *"Provide an overall rating of the instruction,"* rated out of 6
+7. `course_rating`: the mean of students' responses to the prompt, *"Provide an overall rating of the course,"* rated out of 6
+8. `learn_rating`: the mean of students' responses to the prompt, *"Estimate how much you learned in the course,"* rated out of 6
+9. `challenge_rating`: the mean of students' responses to the prompt, *"Rate the effectiveness of the course in challenging you intellectually,"* rated out of 6
+10. `interest_rating`: the mean of students' responses to the prompt, *"Rate the effectiveness of the instructor in stimulating your interest in the subject,"* rated out of 6
+11. `hours_spent`: the mean of students' responses to the prompt, *"Estimate the average number of hours per week you spent on this course outside of class and lab time."*
+12. `essay`: text responses to the prompt, *"Please summarize your reaction to this course focusing on the aspects that were most important to you."*
+
+### Data Preparation
+Student essay responses for each class share all other variables. Therefore, the raw data only contains a complete entry for the first instance of each class, and following entries are empty except for differing student essay responses. 
+
+To address these missing values, cleaning occurred in three main steps: First, string values were changed to be missing values when empty. Second, missing values were filled from the nearest values above. Finally, the data was examined for missingness, and no remaining missingness (other than in the `essay` responses) was found. 
+
+## The Background
+In the four years that I've been at Northwestern, I've heard my fair share of anecdotes, stereotypes, and stories about the students and classes in the different schools. *SESP classes are easy, but no one learns anything*; or *McCormick kids never leave their dorms because of how much they have to study*; or this or that class is really great, or this or that professor is really horrible. 
+
+However, CTECs do not provide a built-in mechanism to compare data across courses or across teachers, in a department or across departments. This project aimed to compare data across schools and classes to investigate any patterns that may be of interest, like:
+
+- Which school learns the most from their classes?
+- Does putting in more time make the class more rewarding?
+- Which school has the best professors? Best classes?
+- Does having a better professor influence how much students feel that they learn?
+- Who is the most liked and most hated teacher in each department?
+- What are the best classes overall and in each department? 
+
+## Here is what I found.
+
+### Which school's students spend the most time on their classes?
+
+![Hours Spent Studying By School](figures/schools_hours_spent.png)
+
+It seems some stereotypes have truth to them -- McCormick students spend **significantly more** hours on average (6.58h) than students from other schools on their classes, as shown in the figure above.
+
+Interestingly, Medill (5.46h) and Bienen (5.55h) students spend more time than students from other schools (\<5h). Tracking down sources and practicing an instrument definitely do take up a lot of time!
+
+### Which school's students learn the most from their classes?
+
+![Amount Learned By School](figures/schools_amount_learned.png)
+
+The differences in ratings here are less dramatic, with students from all schools answering an average of \>4 when asked to "Estimate how much [they] learned in the course," on a 1 to 6 scale. However, McCormick and Weinberg students rate that they **learned the most** on average, being the only schools with an average learning rating greater than 5.
+
+Once again, though, it seems stereotypes hold true -- SESP students rated that they **learned the least** on average. 
+
+Putting together these results with the previous ones, it seems a trend is beginning to emerge. Could it be that the schools that spend the least time on their classes also tend to feel like they don't learn as much? And could the opposite also be true? Let's see.
+
+### Does putting in more time make a class more rewarding? 
+
+![Time Spent Versus Amount Learned](figures/time_learning_scatterplot.png)
+
+A relationship certainly seems to exist. For example, ***NONE*** of the courses that required less than 10 hours of work had a learning rating of less than 3.5. AT the same time, however, higher learning ratings were spread across the board, with some classes requiring minimal hours of work and still others requiring over 13 hours on average. 
+
+In other words: **It doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.**
+
+Then what happens if we take a closer look at each school on their own? 
+
+![Time Spent Versus Amount Learned By School](figures/time_learning_schools_scatterplot.png)
+
+Notably, *McCormick* classes were the only ones requiring **over 12.5 hours** of work per class. On the flip side, *SESP* classes were the only ones with a learning rating of **less than 2.** 
+
+Once again, the stereotypes do seem to be holding true. Naturally, this type of result makes us want to ask *why* such patterns exist. Could it be due to a difference in the type or amount of homework assigned? We could interview students to find out, but that's beyond the scope of this project. 
+
+Alternatively, there might be a difference in the quality of professors between schools. So let's look at professors next.
+
+### Which school has the best professors?
+
+Let's define a new instructor measure rated out of 12, `inst_combined_rating`, by combining students' responses to the prompt about overall rating of instruction, rated out of 6, and the prompt about how interesting the instructor is, also rated out of 6. 
+
+![Instruction Rating By School](figures/schools_instruction_rating.png)
+
+It looks like professors fall into three tiers: best, okay, and worst. The School of Comms and Weinberg have the **best professors**, with average instruction ratings of over 10.5. Medill has the **worst professors**, with a notably low average instruction rating of 9.57. In comparison, Bienen (9.91), McCormick (10.04), and SESP (10.17) all had **okay professors**, with average instruction ratings of around 10. My experience at Northwestern agrees with these ratings: **Medill has the absolute worst professors I've ever had. The professors in the School of Communications definitely practice what they preach. The other schools are a mixed bag.**
+
+I was surprised by how high the Weinberg ratings were, however. It seems that *using a representative department does not model reality as well here, because of the drastic difference between departments* in Weinberg. The psychology department (which we look at in this project) is well-known for having spectacular professors, for example, whereas the chemistry department is notoriously hated. If I had the ability to look at data across all departments, I would expect to see results closer to 10. 
+
+Glancing at these instructor results in comparison to the results from our learning analysis, a relationship does not immediately appear. Let's see what else the data has to say. 
+
+### Does having a better professor influence how much students learn?
+
+![Amount Learned Versus Instructor Rating By School](figures/instructor_learning_scatterplot.png)
+
+There is a **strong linear correlation** between how good the professor is and how much students feel that they learn in a class. We can't tell which causes what, but there certainly appears to be a relationship between these two variables. Maybe having a better professor helps students learn more, or maybe feeling like they learned a lot in a class is part of what makes students give their instructors high ratings, or both. 
+
+When I'm rating my instructors on CTECs, for example, I wouldn't rank their instruction very highly if I didn't feel like they taught me anything. At the same time, if a great professor taught me, I'd probably learn a lot from them. 
+
+We've looked at which schools have the best professors. How about classes?
+
+### Which school has the best classes?
+
+![Course Rating By School](figures/schools_course_rating.png)
+
+From a numerical rating alone, it's difficult to rank which school's classes are definitively best. Bienen classes are rated worse than all the other schools on average (4.44), but even the school with the highest average course ratings, Comms (5.16), was not that much higher in ratings than the other schools: Medill (4.65), McCormick (4.90), SESP (4.72), and Weinberg (5.02).
+
+Luckily, CTECs provide us with a powerful measure to analyze course information: open-ended responses. Reading through and analyzing all 5000+ short-response entries would take us forever, but not for our computers! 
+
+We perform a sentiment analysis on the open-ended essay responses and define a new measure `sentiment_rating` denoting how positive the student feedback is for each course.  
+
+Let's see what these short-response entries have to tell us.
+
+## Progress Summary
+For this progress memo, I completed over 10 hours of data collection, cleaned the data, and am currently exploring the fourth of the ten questions I was interested in, described above. For the remaining questions, my next steps will be as follows:
+
+DONE - Does putting in more time make the class more rewarding?: **Break up the total plot to look at each school in its own plot**
+DONE - Which school has the best professors? **define a new instructor measure using the inst_rating and interest_rating**, then **take the means of the new instructor rating for each school and compare using bar plots**
+DONE - Does having a better professor influence how much students feel that they learn? **use the new instructor measure and compare to learn_rating using a scatterplot** 
+- Which school has the best classes? **take means of course_rating for each school and compare using bar plot.** ALSO **filter for positive and negative affect codewords to complete a sentiment analysis on the CTECs** in order to better inform the course ratings
+- Which school is the best overall? **make radar plots for each school**
+- Who is the most liked and most hated teacher in each department? **use the new instructor rating to find which teachers have the highest and lowest ratings**
+- Which classes have the most opinionated CTECs, either good or bad? **see which sentiment analyses are the most positive and most negative**
+- For classes with more than one teacher, who taught it best? **filter for classes with unique instructor values but same course and department numbers**, then **compare instructor ratings**
+- What are the best classes overall and in each department? **create enjoyment rating based on combination of inst_rating, course_rating, learn_rating, and interest_rating**, consider including challenge_rating, then **find teachers with the highest enjoyment ratings** in each department and overall
+- What comparisons can we make by level (100-200-300)? **group .by level and run analyses that may be of interest for these groups**, like if students feel like they learn more depending on level for example 
+
+I think my progress is in great shape. I estimate I still have about 10 hours of work left. This project was very heavy on data collection, as you know. 
