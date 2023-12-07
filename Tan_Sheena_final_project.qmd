@@ -191,15 +191,48 @@ In summary:
 
 ## Conclusion
 
-TKTK
+This project aimed to explore and compare student evaluations across course departments representing each of the six Northwestern schools using CTEC data from the academic year 2022-23, to better understand the similarities and differences between them. 
+
+Several key findings emerged from the investigation:
+
+1. **Time Spent on Classes:** McCormick students spent significantly more time on their classes (6.58h) than any other school. 
+2. **Learning Outcomes:** McCormick and Weinberg students perceived that they learned the most from their classes, and SESP students reported the lowest average learning outcomes, reinforcing certain stereotypes.
+3. **Relationship Between Time Spent and Learning:** It doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.
+4. **Instructor Ratings:** The School of Communications and Weinberg had the highest-rated instructors, while Medill had the lowest. 
+5. **Impact of Instructor Quality on Learning:** There is a strong linear correlation between instructor ratings and perceived learning outcomes. Students who rated their instructors higher tended to report learning more in the course.
+6. **Course Ratings:** Differences between schools were not substantial. Bienen had slightly lower course ratings, and Comms had slightly course ratings, but the differences were not decisive.
+7. **Sentiment Analysis:** Overall, course sentiments were positive, indicating a general satisfaction with Northwestern courses. Bienen had slightly lower sentiment ratings, and Comms had slightly higher ratings, but the differences were not decisive.
+8. **Overall Evaluation:** McCormick and Weinberg appeared to have the most consistently high ratings across various metrics. Medill had consistently lower ratings, while Comms students rated their courses and instructors highly despite reporting avergage perceived learning outcomes. Bienen and SESP showed a "skewed" pattern, with relatively high course ratings compared to low instructor ratings and learning outcomes.
+
+**Surprises and Future Work:**
+
+   - Surprisingly, certain stereotypes about schools and departments held true in the data, validating anecdotal perceptions.
+   - I was most surprised by the relationship between Time Spent and Learning, but the finding makes a lot of sense. 
+   - As briefly mentioned in the report, potential avenues for future research could explore the reasons behind these findings, as there was only so much I could make claims about without experimental data. I would be interested in running an open-coding on the open-ended responses, or otherwise interviewing students, to better understand **what** is causing these differences in reported student learning beyond only teacher quality and time spent. 
+   - Also, this investigation would have been much more robust with data across multiple departments within a school to account for nuances within departments with diverse reputations.
+
+In summary, this project provides valuable insights into the dynamics of student experiences across Northwestern schools. The findings offer a foundation for future inquiries into the factors influencing these experiences and suggests areas for improvement within the academic landscape of each school.
 
 ## Appendix: extra explorations
 
 ### How are our measures related?
 
-### Who is the most liked and most hated teacher in each department? 
+I made the decision to use `course_rating` as a measure of course quality, because the phrasing of the question prompt addresses the course overall. However, the other measures of course quality that we developed, `challenge_rating` and `essay_sentiment`, are significantly correlated to `course_rating`. 
 
-**use the new instructor rating to find which teachers have the highest and lowest ratings**
+![Scatterplot of essay_sentiment and course_rating](figures/exploratory_course_measure1.png)
+![Scatterplot of course_rating and challenge_rating](figures/exploratory_course_measure2.png)
+
+### Who are the most and least liked teachers in each department?
+
+**Most liked: **
+Out of all teachers with perfect average combined instructor ratings (meaning that they received a perfect  6 on both their instruction rating and their interest rating from every student that rated them), **Patrick Croke** had the highest learning rating for McCormick, **Renee Engeln** for Weinberg, **Josiah Rosario** for SESP, **Bob Rowley** for Medill, **Alex Gonzalez** for SESP, and **Vincent Ip** for Bienen.
+
+{{< include figures/exploratory_most_liked_teacher.html >}}
+
+**Least liked:**
+
+{{< include figures/exploratory_least_liked_teacher.html >}}
+
 
 ### Which classes have the most opinionated CTECs, either good or bad? 
 
