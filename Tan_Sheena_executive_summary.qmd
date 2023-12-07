@@ -1,0 +1,62 @@
+---
+title: "Executive Summary"
+subtitle: "Project Title: 2022-2023 CTEC Data Exploratory Analysis"
+author: "Sheena Tan"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+
+execute:
+  echo: false
+  warning: false
+  
+from: markdown+emoji 
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git](https://github.com/stat301-1-2023-fall/final-project-1-sheena-tan.git)
+
+:::
+
+## Introduction
+
+The report presents an exploratory analysis of data obtained from Northwestern's [Course and Teacher Evaluation Council (CTEC)](https://www.northwestern.edu/ctec) system for the academic year 2022-23. The CTEC system does not provide a mechanism to compare data across course departments or schools. The study aims to compare data across schools, focusing on six course departments representing the six Northwestern schools, and investigating patterns and comparisons within student evaluations.
+
+## Key Findings
+
+1. **Time Spent on Classes:** McCormick students spent significantly more time on their classes than any other school. Comms and SESP students spend the least time on their classes, reinforcing certain stereotypes.
+2. **Learning Outcomes:** McCormick and Weinberg students perceived that they learned the most from their classes, while SESP students reported the lowest average learning outcomes, aligning with stereotypes.
+3. **Relationship Between Time Spent and Learning:** Minimal time can result in perceived learning, but more time resulted in strong feelings of learning. In other words, *it doesn't take a lot of time to feel like you learned a lot, but if it does take time, you'll feel like you learned from it.*
+4. **Instructor Ratings:** The School of Communications and Weinberg had the highest-rated instructors, while Medill had the lowest. 
+5. **Impact of Instructor Quality on Learning:** There is a strong linear correlation between instructor ratings and perceived learning outcomes. Students who rated their instructors higher tended to report learning more in the course.
+6. **Course Ratings:** Differences between schools were not substantial. Bienen had slightly lower course ratings, and Comms had slightly course ratings, but the differences were not decisive.
+7. **Sentiment Analysis:** Overall, course sentiments were positive, indicating a general satisfaction with Northwestern courses. Bienen had slightly lower sentiment ratings, and Comms had slightly higher ratings, but the differences were not decisive.
+8. **Overall Evaluation:** McCormick and Weinberg appeared to have the most consistently high ratings across various metrics. Medill had consistently lower ratings, while Comms students rated their courses and instructors highly despite reporting avergage perceived learning outcomes. Bienen and SESP showed a "skewed" pattern, with relatively high course ratings compared to low instructor ratings and learning outcomes.
+
+**Surprises and Future Work:**
+
+- Certain stereotypes about schools and departments held true in the data, validating anecdotal perceptions.
+- The relationship between time spent and learning discovered could provide explanations to what helps students learn.
+- Future research could explore reasons behind these findings, through open-coding on student essay responses or interviews. 
+- Limitations of the project include how data was not gathered across multiple departments within a school, neglecting to account for nuances between departments with diverse reputations.
+
+## Conclusion
+
+The project provides valuable insights into student experiences across Northwestern schools. Findings offer a foundation for future inquiries into influencing factors and suggest areas for improvement within each school's academic landscape.
+
+## Appendix: Extra Explorations
+
+- Most and least liked instructors in each department.
+- Classes with the most opinionated CTECs.
+- Evaluation of classes with multiple instructors
+- Analysis of learning outcomes based on class level (100-200-300).
+
+The report concludes with a reflection on the validity of measures and a call for continued research to enhance understanding and address potential limitations.
+
+

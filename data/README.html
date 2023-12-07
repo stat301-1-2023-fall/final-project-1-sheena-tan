@@ -354,21 +354,17 @@ display: none;
 
 <div id="datasets" class="section level2">
 <h2>Datasets</h2>
-<div id="data-source" class="section level3">
-<h3>Data Source</h3>
-<p>I am using data from Northwestern’s Course and Teacher Evaluation
-Council (CTEC) system, which is data available to students at
+<p>The data used is from Northwestern’s <a href="https://www.northwestern.edu/ctec">Course and Teacher Evaluation
+Council (CTEC)</a> system, which is data available to students at
 Northwestern University. These evaluations provide ratings made by
-previous students regarding various courses and their instructor,
-including information like how much time the student spent on the
-course, what degree requirements the course fulfilled for the student,
-what year and school the student is in, and how they would rate the
+previous students regarding various Northwestern courses and their
+instructor(s), including information like how much time the student
+spent on the course, what degree requirements the course fulfilled for
+the student, what year and school the student is in, and ratings of the
 instruction and the course across several categories.</p>
-<p>As discussed with Professor Sass, I finished scraping data from the
-most recent academic year (2022-23) across various undergraduate
-courses, organizing the data by school and department. I took data from
-six representative departments, for each of the six Northwestern
-schools.</p>
+<p>The data used in this project was scraped from <a href="https://www.northwestern.edu/ctec">CTEC data</a> from the most
+recent academic year (2022-23) across six representative course
+departments, for each of the six Northwestern schools:</p>
 <ol style="list-style-type: decimal">
 <li>Psychology (PSYCH) for Weinberg,</li>
 <li>Civil and Environmental Engineering (CIV_ENV) for McCormick,</li>
@@ -378,69 +374,47 @@ schools.</p>
 <li>and School of Education &amp; Social Policy Core (SESP) for
 SESP.</li>
 </ol>
-</div>
-<div id="data-description" class="section level3">
-<h3>Data Description</h3>
-<p>The data has a total of 5137 objects across 12 variables.</p>
+<p>The data has a total of <strong>5137 objects</strong> across
+<strong>12 variables</strong>.</p>
 <ol style="list-style-type: decimal">
 <li><code>school</code>: categorical variable; the school the department
-is from,</li>
-</ol>
-<ul>
-<li><code>mcmk</code> for McCormick,</li>
-<li><code>jour</code> for Medill,</li>
-<li><code>comm</code> for Comms,</li>
-<li><code>bien</code> for Bienen,</li>
-<li><code>sesp</code> for SESP,</li>
-<li>and <code>wnbg</code> for Weinberg</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
+is from – denoted <code>mcmk</code> for McCormick, <code>jour</code> for
+Medill, <code>comm</code> for Comms, <code>bien</code> for Bienen,
+<code>sesp</code> for SESP, and <code>wnbg</code> for Weinberg</li>
 <li><code>dept</code>: categorical variable; the department the course
-is offered through,</li>
-</ol>
-<ul>
-<li><code>psych</code> for Psychology,</li>
-<li><code>sesp</code> for SESP Core,</li>
-<li><code>music</code> for Music,</li>
-<li><code>comm_st</code> for Communication Studies ,</li>
-<li><code>jour</code> for Journalism,</li>
-<li>and <code>civ_env</code> for Civil and Environmental
+is offered through – denoted <code>psych</code> for Psychology,
+<code>sesp</code> for SESP Core, <code>music</code> for Music,
+<code>comm_st</code> for Communication Studies , <code>jour</code> for
+Journalism, and <code>civ_env</code> for Civil and Environmental
 Engineering</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
 <li><code>course_num</code>: the three digit course number</li>
 <li><code>course_term</code>: categorical variable; the quarter the
-course was offered,</li>
-</ol>
-<ul>
-<li><code>fall</code> for Fall 2022,</li>
-<li><code>winter</code> for Winter 2023,</li>
-<li>and <code>spring</code> for Spring 2023</li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
+course was offered – denoted <code>fall</code> for Fall 2022,
+<code>winter</code> for Winter 2023, and <code>spring</code> for Spring
+2023</li>
 <li><code>instructor</code>: the name of the instructor</li>
 <li><code>inst_rating</code>: the mean of students’ responses to the
-prompt, “Provide an overall rating of the instruction.” rated out of
-6</li>
+prompt, <em>“Provide an overall rating of the instruction,”</em> rated
+out of 6</li>
 <li><code>course_rating</code>: the mean of students’ responses to the
-prompt, “Provide an overall rating of the course” rated out of 6</li>
-<li><code>learn_rating</code>: the mean of students’ responses to the
-prompt, “Estimate how much you learned in the course.” rated out of
+prompt, <em>“Provide an overall rating of the course,”</em> rated out of
 6</li>
+<li><code>learn_rating</code>: the mean of students’ responses to the
+prompt, <em>“Estimate how much you learned in the course,”</em> rated
+out of 6</li>
 <li><code>challenge_rating</code>: the mean of students’ responses to
-the prompt, “Rate the effectiveness of the course in challenging you
-intellectually.” rated out of 6</li>
+the prompt, <em>“Rate the effectiveness of the course in challenging you
+intellectually,”</em> rated out of 6</li>
 <li><code>interest_rating</code>: the mean of students’ responses to the
-prompt, “Rate the effectiveness of the instructor in stimulating your
-interest in the subject.” rated out of 6</li>
-<li><code>hours_spent</code>: the mean of students’ reponses to the
-prompt, “Estimate the average number of hours per week you spent on this
-course outside of class and lab time.”</li>
-<li><code>essay</code>: text responses to the prompt, “Please summarize
-your reaction to this course focusing on the aspects that were most
-important to you.”</li>
+prompt, <em>“Rate the effectiveness of the instructor in stimulating
+your interest in the subject,”</em> rated out of 6</li>
+<li><code>hours_spent</code>: the mean of students’ responses to the
+prompt, <em>“Estimate the average number of hours per week you spent on
+this course outside of class and lab time.”</em></li>
+<li><code>essay</code>: text responses to the prompt, <em>“Please
+summarize your reaction to this course focusing on the aspects that were
+most important to you.”</em></li>
 </ol>
-</div>
 </div>
 
 
