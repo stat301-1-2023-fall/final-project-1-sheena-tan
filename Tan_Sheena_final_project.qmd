@@ -213,18 +213,12 @@ Several key findings emerged from the investigation:
 
 In summary, this project provides valuable insights into the dynamics of student experiences across Northwestern schools. The findings offer a foundation for future inquiries into the factors influencing these experiences and suggests areas for improvement within the academic landscape of each school.
 
-## Appendix: extra explorations
-
-### How are our measures related?
-
-I made the decision to use `course_rating` as a measure of course quality, because the phrasing of the question prompt addresses the course overall. However, the other measures of course quality that we developed, `challenge_rating` and `essay_sentiment`, are significantly correlated to `course_rating`. 
-
-![Scatterplot of essay_sentiment and course_rating](figures/exploratory_course_measure1.png)
-![Scatterplot of course_rating and challenge_rating](figures/exploratory_course_measure2.png)
+## Appendix: Extra Explorations
 
 ### Who are the most and least liked teachers in each department?
 
 **Most liked: **
+
 Out of all teachers with perfect average combined instructor ratings (meaning that they received a perfect  6 on both their instruction rating and their interest rating from every student that rated them), **Patrick Croke** had the highest learning rating for McCormick, **Renee Engeln** for Weinberg, **Josiah Rosario** for SESP, **Bob Rowley** for Medill, **Alex Gonzalez** for SESP, and **Vincent Ip** for Bienen.
 
 {{< include figures/exploratory_most_liked_teacher.html >}}
@@ -236,14 +230,35 @@ Out of all teachers with perfect average combined instructor ratings (meaning th
 
 ### Which classes have the most opinionated CTECs, either good or bad? 
 
-see which sentiment analyses are the most positive and most negative
+The most positive CTECs were for **BIEN 128** with Susan Osborn in the fall, receiving a 3.20 sentiment score; **BIEN 126** with Vincent Ip in the spring, receiving a 3.14 sentiment score; and **BIEN 127** with Annie Hsiao in the winter, receiving a 3.00 sentiment score. 
+
+The least positive CTECs were for **CIV_ENV 320** with Sinan Keten in the fall, receiving a -1.00 sentiment score; **BIEN 211** with Tomas Saccone in the fall, receiving a -0.25 sentiment score; and **JOUR 302** with Bradley Hamm in the spring, receiving a -0.22 sentiment score. 
+
+For the full listings, see `figures/exploratory_positive_ctecs.html` and `figures/exploratory_negative_ctecs.html`.
+
 
 ### For classes with more than one teacher, who taught it best? 
 
-**filter for classes with unique instructor values but same course and department numbers**, then **compare instructor ratings**
+When trying to choose who to take a course from, this information could come in really handy. I wish CTECs had a built-in comparison capacity!
 
-### What are the best classes overall and in each department?
-create enjoyment rating based on combination of inst_rating, course_rating, learn_rating, and interest_rating
+{{< include figures/exploratory_multiple_teachers.html >}}
+
 
 ### Does class level (100-200-300) determine if students feel like they learn more? 
-group .by level and run analysis
+
+It looks like on average, students feel like they learn ***more*** from 100-level courses than 200-level courses! Could it be because 200-level courses are the required courses, whereas 100-level courses are typically elective seminars? The highest learning rating values are almost all 300-level courses though.
+
+![Learning rating by course level](figures/course_level_boxplot.png)
+
+![Learning vs hours spent by course level](figures/course_level_scatterplot.png)
+
+### How valid are our measures?
+
+I made the decision to use `course_rating` as a measure of course quality, because the phrasing of the question prompt addresses the course overall. However, the other measures of course quality that we developed, `challenge_rating` and `essay_sentiment`, are significantly correlated to `course_rating`. 
+
+![Scatterplot of essay_sentiment and course_rating](figures/exploratory_course_measure1.png)
+
+
+![Scatterplot of course_rating and challenge_rating](figures/exploratory_course_measure2.png)
+
+
